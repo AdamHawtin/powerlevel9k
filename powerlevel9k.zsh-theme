@@ -686,7 +686,7 @@ prompt_command_execution_time() {
   fi
 
   if (( _P9K_COMMAND_DURATION >= POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD )); then
-    "$1_prompt_segment" "$0" "$2" "red" "226" "${humanReadableDuration}" 'EXECUTION_TIME_ICON'
+    "$1_prompt_segment" "$0" "$2" "black" "226" "${humanReadableDuration}" 'EXECUTION_TIME_ICON'
   fi
 }
 
@@ -694,6 +694,10 @@ prompt_command_execution_time() {
 set_default POWERLEVEL9K_DIR_PATH_SEPARATOR "/"
 set_default POWERLEVEL9K_HOME_FOLDER_ABBREVIATION "~"
 set_default POWERLEVEL9K_DIR_SHOW_WRITABLE false
+
+# CUSTOM
+POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon 'LEFT_SUBSEGMENT_SEPARATOR')%F{black} "
+
 prompt_dir() {
   local tmp="$IFS"
   local IFS=""
@@ -1418,7 +1422,7 @@ prompt_kubecontext() {
     if [[ -z "$k8s_namespace" ]]; then
       k8s_namespace="default"
     fi
-  
+
     local k8s_final_text=""
 
     if [[ "$k8s_context" == "k8s_namespace" ]]; then
@@ -1427,8 +1431,8 @@ prompt_kubecontext() {
     else
       k8s_final_text="$k8s_context/$k8s_namespace"
     fi
-  
-    
+
+
     "$1_prompt_segment" "$0" "$2" "magenta" "white" "$k8s_final_text" "KUBERNETES_ICON"
   fi
 }
@@ -1560,8 +1564,9 @@ prompt_powerlevel9k_setup() {
       print -P "\t%F{red}WARNING!%f %F{blue}export LANG=\"en_US.UTF-8\"%f at the top of your \~\/.zshrc is sufficient."
   fi
 
-  defined POWERLEVEL9K_LEFT_PROMPT_ELEMENTS || POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
-  defined POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS || POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
+  # EDITED TO INCLUDE PYTHON virtualenv #CUSTOM #Add history to RIGHT to get line count
+  defined POWERLEVEL9K_LEFT_PROMPT_ELEMENTS || POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable rbenv vcs)
+  defined POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS || POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status virtualenv ssh root_indicator background_jobs time)
 
   # Display a warning if deprecated segments are in use.
   typeset -AH deprecated_segments
