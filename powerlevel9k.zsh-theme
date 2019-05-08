@@ -1565,8 +1565,8 @@ prompt_powerlevel9k_setup() {
   fi
 
   # EDITED TO INCLUDE PYTHON virtualenv #CUSTOM #Add history to RIGHT to get line count
-  defined POWERLEVEL9K_LEFT_PROMPT_ELEMENTS || POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable rbenv vcs)
-  defined POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS || POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status virtualenv ssh root_indicator background_jobs time)
+  defined POWERLEVEL9K_LEFT_PROMPT_ELEMENTS || POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+  defined POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS || POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
 
   # Display a warning if deprecated segments are in use.
   typeset -AH deprecated_segments
